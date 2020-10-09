@@ -38,7 +38,7 @@ public class Change extends Money {
 		
 		int nickelsRemaining = dimesAndNickelsRemaining % DIME;		//is there change left after dividing into dimes?
 		
-		nickelAmount += nickelsRemaining / NICKEL;					//how many nickels?
+		nickelAmount += nickelsRemaining / NICKEL;					//how many nickels? (there can only ever be one nickel)
 		
 		return "You receive " + quarterAmount + " quarter(s), " + dimeAmount + " dime(s), and " + nickelAmount + " nickels in change.";
 	}
