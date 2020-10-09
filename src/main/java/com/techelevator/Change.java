@@ -2,27 +2,24 @@ package com.techelevator;
 
 public class Change extends Money {
 	
-	final int QUARTER = 25;
-	final int DIME = 10;
-	final int NICKEL = 5;
-	int dollars;
-	double change;
-	int quarters;
-	int dimes;
-	int nickels;
+	private final int QUARTER = 25;
+	private final int DIME = 10;
+	private final int NICKEL = 5;
+	private int dollars;
+	private double change;
+	private double balance = getBalance();
 	
 
 	public void formatChange() {
 		
-		double bal = getBalance();									//get balance from the parent class
+		this.dollars = (int) balance;										//change this to dollars casting off decimal (These by default will be given back as 4 quarters in the makeChange method)
 		
-		dollars = (int) bal;										//change this to dollars casting off decimal (These by default will be given back as 4 quarters in the makeChange method)
-		
-		change = bal - dollars;										//get the spare change amount
+		this.change = balance - dollars;									//get the spare change amount
 		
 	}
 	
 	public String makeChange() {									//***** will return output later as program develops
+		
 		
 		int quarterAmount = dollars * 4; 		
 		int dimeAmount = 0;
@@ -40,7 +37,7 @@ public class Change extends Money {
 		
 		nickelAmount += nickelsRemaining / NICKEL;					//how many nickels? (there can only ever be one nickel)
 		
-		return "You receive " + quarterAmount + " quarter(s), " + dimeAmount + " dime(s), and " + nickelAmount + " nickels in change.";
+		return balance + "You receive " + quarterAmount + " quarter(s), " + dimeAmount + " dime(s), and " + nickelAmount + " nickels in change.";
 	}
 	
 	

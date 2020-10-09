@@ -17,6 +17,10 @@ public class VendingMachineItem {
 		this.productType = productInfo[3];
 		
 	}
+	
+	public String getItemKey() {
+		return itemKey;
+	}
 
 	public String getProduct() {
 		return product;
@@ -34,8 +38,8 @@ public class VendingMachineItem {
 		return inventory;
 	}
 	
-	public void setInventory(int deductMe) {
-		inventory -= deductMe;
+	public void setInventory() {
+		this.inventory--;
 	}
 	/*@Override
 	public String toString() {

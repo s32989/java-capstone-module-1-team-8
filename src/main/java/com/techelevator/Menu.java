@@ -1,18 +1,23 @@
 package com.techelevator;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
 
 public class Menu {
-	private static String userChoice = "";
-	private static Scanner userInput = new Scanner(System.in);
-
-	public static void main(String[] args) throws FileNotFoundException {
+	private String userChoice = "";
+	private Scanner userInput = new Scanner(System.in);
+	private Map<String, VendingMachineItem> vendingMachineData;
+	private List<String> itemList;
+	
+	public Menu(Map<String, VendingMachineItem> data, List<String> itemList) {
+		
+		this.itemList = itemList;
+		this.vendingMachineData = data;
+		
+	}
+	
+	public void showHeader() {
 		
 		System.out.println("*********************");
 		System.out.println("** Vendo-Matic 800 **");
@@ -21,42 +26,66 @@ public class Menu {
 		
 		System.out.println();
 		
-	while(true) {
+	}
+	
+	public void showMenu() {
 		System.out.println("***Main Menu***");
 		System.out.println();
 		System.out.println("[1] Display Vending Machine Options");
         System.out.println("[2] Purchase");
         System.out.println("[3] Exit");
         System.out.println();
-        System.out.print("Please choose an option>>> ");
-        String userChoice = userInput.nextLine();
-
-        System.out.println();
-        if((userChoice.equals("1"))){
-        	System.out.flush();
-        	Scanner myScanner = new Scanner(new File("vendingmachine.csv")); //bob to add new sheet for updatable inventory 
-        	myScanner.useDelimiter("|");  
-        	while (myScanner.hasNext()) {  
-         
-        	System.out.print(myScanner.next());  
-        	System.out.flush();
-        	}   
-        myScanner.close();
-        	
-        }else if(userChoice.equals("2")) {
-        	;
-        	System.out.println("figure out how to get to purchase menu");
-        	System.out.println();
-        	
-        	
-        }else if(userChoice.equals("3")) {
-        	System.out.println("Thank you for using the Vendo-Matic 800 \nHave a nice day :)");
-        	System.out.flush();
-        	System.exit(0);
-        	
-        }
+        
+	}
+	
+	public void getInput() {
+		
+		System.out.print("Please choose an option>>> ");
+		userChoice = userInput.nextLine();
+		
+		String userChoiceTrim = userChoice.trim();
+		
+		while (!userChoiceTrim.equals("1") && !userChoiceTrim.equals("2") && !userChoiceTrim.equals("3")) {
+			System.out.println("Please choose (1), (2), or (3) >>> ");
+			userChoice = userInput.nextLine();
+			userChoiceTrim = userChoice.trim();
+		}
+		
+		userChoice = userChoiceTrim;
 		
 	}
+	
+	public void useInput() {
+		if (userChoice.equals("1")) {
+			
+			for (String key: vendingMachineData.keySet()) {
+				VendingMachineItem vMI = vendingMachineData.get(key);
+				System.out.println(vMI.getProduct() + ": " + vMI.getInventory() + " remaining.");
+			}
+			
+			showMenu();
+			getInput();
+			useInput();
+			
+		}else if(userChoice.equals("2")) {
+			goToPurchaseMenu();
+		}else {
+			System.exit(0);
+		}
+	}
+	
+	
+	
+	public void goToPurchaseMenu() {
+		PurchaseMenu pM = new PurchaseMenu(vendingMachineData, itemList);
+		pM.run();
+	}
+	
+	public void run() {
+		showHeader();
+		showMenu();
+		getInput();
+		useInput();
 	}
 }
 

@@ -1,84 +1,175 @@
 package com.techelevator;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.nio.channels.NonWritableChannelException;
-import java.util.ArrayList;
+
+
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class PurchaseMenu {
 	private String userChoice = "";
-	private static Scanner userInput = new Scanner(System.in);
-	public static int sum = 0;
+	private String itemKeyChoice = "";
+	private Scanner userInput = new Scanner(System.in);
+	public int inputBillSum = 0;
+	private Map<String, VendingMachineItem> vendingMachineData;
+	private List<String> itemList;
+	private Money balance = new Money();
+	
 
-
-	public int getSum() {
-		return sum;
-	}
-	public String getUserChoice(){
-		return userChoice;
-	}
-	public Scanner getUserInput() {
-		return userInput;
-	}
-
-	public static void main(String[] args) throws FileNotFoundException {
+	
+	public PurchaseMenu (Map<String, VendingMachineItem> data, List<String> vItemList) {
+		this.itemList = vItemList;
+		this.vendingMachineData = data;
 		
-		System.out.println("*********************");
-		System.out.println("** Vendo-Matic 800 **");
-		System.out.println("**  Umbrella Corp  **");
-		System.out.println("*********************");	
-		
+	}
+	
+	
+	public void showMenu() {
 		System.out.println();
-		
-	while(true) {
 		System.out.println("***Purchase Menu***");
 		System.out.println();
 		System.out.println("[1] Feed Money");
         System.out.println("[2] Select Product");
         System.out.println("[3] Finish Transaction");
         System.out.println();
-        System.out.print("Please choose >>> ");
-        String userChoice = userInput.nextLine();
-
+        showBalance();
         
-        
-        if((userChoice.equals("1"))){
-        	
-        	System.out.print("please enter the amount of money to be added(in whole dollars)>>> ");
-        	int moneyAdded = userInput.nextInt();
-        	while(moneyAdded >= 0) {
-        	sum += moneyAdded;
-        	
-        	System.out.println("Current Money Provided: $" + sum);
-        	System.out.println();
-       
-        	break;
+	}
+	
+	public void getInput() {
+		
+		System.out.print("Please choose an option>>> ");
+		userChoice = userInput.nextLine();
+		
+		String userChoiceTrim = userChoice.trim();
+		
+		while (!userChoiceTrim.equals("1") && !userChoiceTrim.equals("2") && !userChoiceTrim.equals("3")) {
+			System.out.println("Please choose (1), (2), or (3) >>> ");
+			userChoice = userInput.nextLine();
+			userChoiceTrim = userChoice.trim();
+		}
+		
+		userChoice = userChoiceTrim;
+		
+	}
+	
+	public void useInput() {
+		if (userChoice.equals("1")) {
+			
+			System.out.println("Please add a $1, $2, $5 or $10 bill.");
+			
+			String moneyEntered = userInput.nextLine();
+			
+			String moneyTrimmed = moneyEntered.trim();
+			
+			while(!moneyTrimmed.equals("1") && !moneyTrimmed.equals("2") && !moneyTrimmed.equals("5") && !moneyTrimmed.equals("10")) {
+				System.out.println("Please add a $1, $2, $5 or $10 bill. Type exit to go back to the Purchase menu.");
+				
+				moneyTrimmed = userInput.nextLine();
+				
+				if (moneyTrimmed.trim().toLowerCase().equals("exit")) {
+					
+					showMenu();
+					getInput();
+					useInput();
+					
+				}
+				
 			}
-        	
-        	//Bob's code
-       }else if(userChoice.equals("2")) {
-        	Scanner myScanner = new Scanner(new File("vendingmachine.csv"));  
-        	myScanner.useDelimiter("|");  
-        	while (myScanner.hasNext()) {  
-         
-        	System.out.print(myScanner.next());  
-        	System.out.flush();
-        	}   
-        myScanner.close();
-        
+			
+			//add the bills to balance
+			
+			double addMeToBalance = Double.parseDouble(moneyTrimmed);
+			balance.feedMoney(addMeToBalance);
 		
-        	//Sam's code
-        }else if(userChoice.equals("3")) {
-        	System.out.println("Returning to main menu ");
-        	System.out.flush();
-        	
-        
-        }
+			
+			showMenu();
+			getInput();
+			useInput();
+		
+			
+		}else if(userChoice.equals("2")) {
+			
+			for (int i = 0; i < itemList.size(); i++) {
+				System.out.println(itemList.get(i));
+			}
+			
+			getItemKeyInput();
+			
+			if(checkMapPrice() > balance.getBalance()) {
+				System.out.println("Not enough money in balance.");
+				run();
+			}
+			if(vendingMachineData.get(itemKeyChoice).getInventory() < 1) {
+				System.out.println("Out of stock.");
+				run();
+			}
+			
+			if (checkMapPrice() <= balance.getBalance() && vendingMachineData.get(itemKeyChoice).getInventory() >= 1){
+				balance.updateBalanceAfterPurchase(vendingMachineData.get(itemKeyChoice).getPrice());
+				vendingMachineData.get(itemKeyChoice).setInventory();
+				
+				
+				showMenu();
+				getInput();
+				useInput();
+			}
+			
+		} else {
+			
+			
+			balance.formatChange();
+			System.out.println(balance.makeChange());
+			balance.emptyBalanceToMakeChange();
+			
+
+			Menu m = new Menu(vendingMachineData, itemList);
+			m.run();
+			
+		}
 		
 	}
+	
+	public void showBalance() {
+		System.out.println(balance.displayBalance());
+		System.out.println();
 	}
+	
+	public void getItemKeyInput() {
+		String theirInput = userInput.nextLine().trim().toUpperCase();
+		
+		
+		while (!vendingMachineData.keySet().contains(theirInput)) {
+			System.out.println();
+			System.out.println("Please enter a valid key: ");
+			System.out.println();
+			for (int i = 0; i < itemList.size(); i++) {
+				System.out.println(itemList.get(i));
+			}
+			
+			theirInput = userInput.nextLine();
+		}
+		
+		itemKeyChoice = theirInput;
+	}
+	
+	public double checkMapPrice() {
+		
+		return vendingMachineData.get(itemKeyChoice).getPrice();
+		
+	}
+	
+	public void checkMapInventory() {
+		
+	}
+	
+	public void run() {
+		showMenu();
+		getInput();
+		useInput();
+		
+	}
+
 }
 
 	
