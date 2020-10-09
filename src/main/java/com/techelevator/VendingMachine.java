@@ -7,14 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class VendingMachine  {
 
-	public static Map <String, VendingMachineItem> vendingMachineItems = new HashMap<String, VendingMachineItem>();  // each time you run VendingMachine.java there's a static hashMap that can hold VendingMachineItem objects with their associated key
-	public static List <String> itemAndCodeList = new ArrayList<String>();
-	//public static File log;		
-	
-	//if we want to do the log challenge
+	public static Map <String, VendingMachineItem> vendingMachineItems = new TreeMap<String, VendingMachineItem>();  // each time you run VendingMachine.java there's a static hashMap that can hold VendingMachineItem objects with their associated key
+	public static List <String> itemAndCodeList = new ArrayList<String>();											// added this just so that we can list the items as they're ordered in vendingmachine.csv
 	
 	public static void main (String[] args) {
 		
@@ -27,7 +25,7 @@ public class VendingMachine  {
 	
 	public static void initializeVendingMachineMap() {
 		
-		String path = "/Users/student/workspace/java-capstone-module-1-team-8/vendingmachine.csv"; 					//***** using this until we get userInput *****
+		String path = "vendingmachine.csv"; 					
 		
 		File vendingMachineItemInfo = new File(path);
 		
@@ -56,7 +54,7 @@ public class VendingMachine  {
 	
 	public static void initializeVendingMachineList() {
 		
-		String path = "/Users/student/workspace/java-capstone-module-1-team-8/vendingmachine.csv"; 					//***** using this until we get userInput *****
+		String path = "vendingmachine.csv"; 					
 		
 		File vendingMachineItemInfo = new File(path);
 		
@@ -68,9 +66,9 @@ public class VendingMachine  {
 				
 				String[] info = splitMe.split("\\|");																//split input for each line delimited by |
 				
-				String listItem = info[0] + "| " + info[1];
+				String listItem = info[0] + "| " + info[1];															// making a string to add to the list
 				
-				itemAndCodeList.add(listItem);
+				itemAndCodeList.add(listItem);																		// add the String to the arrayList
 				
 				
 			}

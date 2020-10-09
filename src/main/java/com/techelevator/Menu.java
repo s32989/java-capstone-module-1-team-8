@@ -58,9 +58,14 @@ public class Menu {
 	public void useInput() {
 		if (userChoice.equals("1")) {
 			
-			for (String key: vendingMachineData.keySet()) {
+			for (String key: vendingMachineData.keySet()) {					
 				VendingMachineItem vMI = vendingMachineData.get(key);
-				System.out.println(vMI.getProduct() + ": " + vMI.getInventory() + " remaining.");
+				System.out.print(vMI.getItemKey() + " |" + vMI.getProduct() + ": $" + vMI.getPrice() + " |" + vMI.getInventory() + " remaining");
+				if(vMI.getInventory() == 0) {
+					System.out.print(":  SOLD OUT");
+				}
+				System.out.println();
+
 			}
 			
 			showMenu();
@@ -70,6 +75,7 @@ public class Menu {
 		}else if(userChoice.equals("2")) {
 			goToPurchaseMenu();
 		}else {
+			System.out.println("Thank you for using the Vend-O-Matic 800 \n Have a nice day!");
 			System.exit(0);
 		}
 	}

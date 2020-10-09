@@ -77,17 +77,13 @@ public class PurchaseMenu {
 				
 			}
 			
-			//add the bills to balance
-			
 			double addMeToBalance = Double.parseDouble(moneyTrimmed);
 			balance.feedMoney(addMeToBalance);
 		
-			
 			showMenu();
 			getInput();
 			useInput();
 		
-			
 		}else if(userChoice.equals("2")) {
 			
 			for (int i = 0; i < itemList.size(); i++) {
@@ -109,14 +105,12 @@ public class PurchaseMenu {
 				balance.updateBalanceAfterPurchase(vendingMachineData.get(itemKeyChoice).getPrice());
 				vendingMachineData.get(itemKeyChoice).setInventory();
 				
-				
 				showMenu();
 				getInput();
 				useInput();
 			}
 			
 		} else {
-			
 			
 			balance.formatChange();
 			System.out.println(balance.makeChange());
