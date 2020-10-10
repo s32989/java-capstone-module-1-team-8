@@ -1,7 +1,5 @@
 package com.techelevator;
 
-
-
 public class Money {
 	
 	private final int QUARTER = 25;

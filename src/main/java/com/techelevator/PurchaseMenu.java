@@ -17,7 +17,7 @@ public class PurchaseMenu {
 	public int inputBillSum = 0;
 	private Map<String, VendingMachineItem> vendingMachineData;
 	private Money balance = new Money();
-	private File log;														///NEW file 
+	private File log;														
 	
 
 	
@@ -202,7 +202,6 @@ public class PurchaseMenu {
 			}catch (Exception e) {
 				
 			}
-			
 
 			Menu m = new Menu(vendingMachineData, log);
 			m.run();
@@ -250,6 +249,3 @@ public class PurchaseMenu {
 	}
 
 }
-
-	
-
