@@ -9,7 +9,7 @@ public class Money {
 	private final int NICKEL = 5;
 	private int dollars;
 	private double change;
-	private double balance = 0;
+	private double balance = 0.00;
 	
 	Money(){
 		
@@ -19,7 +19,7 @@ public class Money {
 		
 		dollars = (int) balance;										
 		
-		change = balance - dollars;									
+		change = (double) (balance - dollars);									
 	}
 	
 	public String makeChange() {									//***** will return output later as program develops
@@ -29,7 +29,11 @@ public class Money {
 		int dimeAmount = 0;
 		int nickelAmount = 0;
 		
-		int cents = (int)(change * 100.00);							//cast the double change to an integer to cents amount
+		double centsAsDouble = change * 100.00;						//multiplying change value by 100
+		
+		int cents = (int) Math.round(centsAsDouble);				//rounding up from double format (i.e. 19.999999999 cents goes to 20 cents)				
+		
+		
 		
 		quarterAmount += cents / QUARTER;							//how many quarters?
 		
@@ -41,13 +45,17 @@ public class Money {
 		
 		nickelAmount += nickelsRemaining / NICKEL;					//how many nickels? (there can only ever be one nickel)
 		
-		return "You receive " + quarterAmount + " quarter(s), " + dimeAmount + " dime(s), and " + nickelAmount + " nickels in change.";
+		return cents + ") You receive " + quarterAmount + " quarter(s), " + dimeAmount + " dime(s), and " + nickelAmount + " nickels in change.";
 	}
 	
 	
 	public void feedMoney(double moneyFed) {
 		
+		double beforeBal = balance;
+		
 		balance += moneyFed;
+		
+		double afterBal = balance;
 	}
 	
 	public double getBalance() {
