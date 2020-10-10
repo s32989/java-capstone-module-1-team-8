@@ -10,11 +10,12 @@ public class VendingMachine  {
 
 	public static Map <String, VendingMachineItem> vendingMachineItems = new TreeMap<String, VendingMachineItem>();  // each time you run VendingMachine.java there's a static hashMap that can hold VendingMachineItem objects with their associated key
 
+	public static File log = new File("log.txt");
 	
 	public static void main (String[] args) {
 		
 		initializeVendingMachineMap();
-		Menu main = new Menu(vendingMachineItems);
+		Menu main = new Menu(vendingMachineItems, log);
 		main.run();
 		
 	}

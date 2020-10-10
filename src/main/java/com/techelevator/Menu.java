@@ -1,5 +1,6 @@
 package com.techelevator;
 
+import java.io.File;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -7,12 +8,13 @@ public class Menu {
 	private String userChoice = "";
 	private Scanner userInput = new Scanner(System.in);
 	private Map<String, VendingMachineItem> vendingMachineData;
+	private File log;
+
 	
-	public Menu(Map<String, VendingMachineItem> data) {
-		
+	public Menu(Map<String, VendingMachineItem> data, File logFile) {
 		
 		this.vendingMachineData = data;
-		
+		this.log = logFile;
 	}
 	
 	public void showHeader() {
@@ -83,7 +85,7 @@ public class Menu {
 	
 	
 	public void goToPurchaseMenu() {
-		PurchaseMenu pM = new PurchaseMenu(vendingMachineData);
+		PurchaseMenu pM = new PurchaseMenu(vendingMachineData, log);
 		pM.run();
 	}
 	

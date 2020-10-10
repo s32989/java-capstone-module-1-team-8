@@ -10,6 +10,7 @@ public class Money {
 	private int dollars;
 	private double change;
 	private double balance = 0.00;
+	private double fedMoney;
 	
 	Money(){
 		
@@ -51,11 +52,11 @@ public class Money {
 	
 	public void feedMoney(double moneyFed) {
 		
-		double beforeBal = balance;
-		
 		balance += moneyFed;
 		
-		double afterBal = balance;
+		fedMoney = moneyFed;
+		
+		//System.out.println(moneyFed + " "+ getBalance()); 		//the argument variable and the getBalance method will let us log how we want
 	}
 	
 	public double getBalance() {
@@ -76,6 +77,9 @@ public class Money {
 		return "Current Money Provided $ " + balance;
 	}
 	
+	public double fedMoney() {
+		return fedMoney;
+	}
 	
 	
 

@@ -1,6 +1,12 @@
 package com.techelevator;
 
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -10,13 +16,14 @@ public class PurchaseMenu {
 	private Scanner userInput = new Scanner(System.in);
 	public int inputBillSum = 0;
 	private Map<String, VendingMachineItem> vendingMachineData;
-	
 	private Money balance = new Money();
+	private File log;														///NEW file 
 	
 
 	
-	public PurchaseMenu (Map<String, VendingMachineItem> data) {
+	public PurchaseMenu (Map<String, VendingMachineItem> data, File logFile) {
 		this.vendingMachineData = data;
+		this.log = logFile;
 		
 	}
 	
@@ -78,6 +85,26 @@ public class PurchaseMenu {
 			
 			double addMeToBalance = Double.parseDouble(moneyTrimmed);
 			balance.feedMoney(addMeToBalance);
+			
+			DateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa");
+	    	String dateString2 = dateFormat2.format(new Date()).toString();
+	    	
+			try{
+				
+				FileWriter logger = new FileWriter(log,true);
+			
+				String logData = dateString2 + " FEED MONEY $" + balance.fedMoney() + " $" + balance.getBalance() + "\n";
+				
+				try (PrintWriter pw = new PrintWriter(logger)){
+					pw.write(logData);
+				}catch(Exception e){
+					
+				}
+				
+				
+			}catch (Exception e) {
+				
+			}
 		
 			showMenu();
 			getInput();
@@ -98,6 +125,7 @@ public class PurchaseMenu {
 			}
 			System.out.println();
 			System.out.print("Please select product code>>> ");
+			
 			getItemKeyInput();
 			
 			
@@ -113,8 +141,32 @@ public class PurchaseMenu {
 			}
 			
 			if (checkMapPrice() <= balance.getBalance() && vendingMachineData.get(itemKeyChoice).getInventory() >= 1){
+				double beforeBalance = balance.getBalance(); //record before balance
+				
 				balance.updateBalanceAfterPurchase(vendingMachineData.get(itemKeyChoice).getPrice());
 				vendingMachineData.get(itemKeyChoice).setInventory();
+				
+				//log the purchase
+				
+				VendingMachineItem vMI = vendingMachineData.get(itemKeyChoice);
+		    	DateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa");
+		    	String dateString2 = dateFormat2.format(new Date()).toString();
+		    	
+				
+				try{
+					FileWriter logger = new FileWriter(log,true);
+					
+					String logData = dateString2 + " " + vMI.getProduct() + " $" + beforeBalance + " $" + balance.getBalance()+ "\n";
+					try (PrintWriter pw = new PrintWriter(logger)){
+						pw.write(logData);
+					}catch(Exception e){
+						
+					}
+					
+				}catch (Exception e) {
+					
+				}
+				
 				
 				System.out.println();
 				System.out.println(vendingMachineData.get(itemKeyChoice).getProduct() + ", " + vendingMachineData.get(itemKeyChoice).getPrice() + ", " + balance.displayBalance() + ", " + vendingMachineData.get(itemKeyChoice).getItemMessage());
@@ -127,12 +179,32 @@ public class PurchaseMenu {
 			
 		} else {
 			
+			double remainingBal = balance.getBalance();
+			
 			balance.formatChange();
 			System.out.println(balance.makeChange());
 			balance.emptyBalanceToMakeChange();
 			
 
-			Menu m = new Menu(vendingMachineData);
+	    	DateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa");
+	    	String dateString2 = dateFormat2.format(new Date()).toString();
+			
+			try{
+				FileWriter logger = new FileWriter(log,true);
+				
+				String logData = dateString2 + " MAKE CHANGE $" +  remainingBal + " $" + balance.getBalance() + "\n";
+				try (PrintWriter pw = new PrintWriter(logger)){
+					pw.write(logData);
+				}catch(Exception e){
+					
+				}
+				
+			}catch (Exception e) {
+				
+			}
+			
+
+			Menu m = new Menu(vendingMachineData, log);
 			m.run();
 			
 		}
