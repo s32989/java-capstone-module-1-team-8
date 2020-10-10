@@ -18,7 +18,7 @@ public class Menu {
 	}
 	
 	public void showHeader() {
-		
+		System.out.println();
 		System.out.println("*********************");
 		System.out.println("** Vendo-Matic 800 **");
 		System.out.println("**  Umbrella Corp  **");
@@ -29,9 +29,10 @@ public class Menu {
 	}
 	
 	public void showMenu() {
+		System.out.println();
 		System.out.println("***Main Menu***");
 		System.out.println();
-		System.out.println("[1] Display Vending Machine Options");
+		System.out.println("[1] Display Vending Machine Items");
         System.out.println("[2] Purchase");
         System.out.println("[3] Exit");
         System.out.println();
@@ -42,6 +43,7 @@ public class Menu {
 		
 		System.out.print("Please choose an option>>> ");
 		userChoice = userInput.nextLine();
+		System.out.println();
 		
 		String userChoiceTrim = userChoice.trim();
 		
@@ -60,7 +62,7 @@ public class Menu {
 			
 			for (String key: vendingMachineData.keySet()) {					
 				VendingMachineItem vMI = vendingMachineData.get(key);
-				System.out.print(vMI.getItemKey() + " |" + vMI.getProduct() + ": $" + vMI.getPrice() + " |" + vMI.getInventory() + " remaining");
+				System.out.print(vMI.getItemKey() + " |" + vMI.getProduct() + ": $" + vMI.getPrice() + " |" + vMI.getProductType() + " |" + vMI.getInventory() + " remaining");
 				if(vMI.getInventory() == 0) {
 					System.out.print(":  SOLD OUT");
 				}

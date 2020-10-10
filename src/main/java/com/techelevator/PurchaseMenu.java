@@ -40,6 +40,7 @@ public class PurchaseMenu {
 		
 		System.out.print("Please choose an option>>> ");
 		userChoice = userInput.nextLine();
+		System.out.println();
 		
 		String userChoiceTrim = userChoice.trim();
 		
@@ -56,7 +57,8 @@ public class PurchaseMenu {
 	public void useInput() {
 		if (userChoice.equals("1")) {
 			
-			System.out.println("Please add a $1, $2, $5 or $10 bill.");
+			
+			System.out.print("Please add a $1, $2, $5 or $10 bill>>> ");
 			
 			String moneyEntered = userInput.nextLine();
 			
@@ -86,17 +88,29 @@ public class PurchaseMenu {
 		
 		}else if(userChoice.equals("2")) {
 			
-			for (int i = 0; i < itemList.size(); i++) {
-				System.out.println(itemList.get(i));
-			}
 			
+			for (String key: vendingMachineData.keySet()) {					
+				VendingMachineItem vMI = vendingMachineData.get(key);
+				System.out.print(vMI.getItemKey() + " |" + vMI.getProduct() + ": $" + vMI.getPrice() + " |" + vMI.getProductType() + " |" + vMI.getInventory() + " remaining");
+				if(vMI.getInventory() == 0) {
+					System.out.print(":  SOLD OUT");
+				}
+				System.out.println();
+			
+				
+			}
+			System.out.println();
+			System.out.print("Please select product code>>> ");
 			getItemKeyInput();
 			
+			
 			if(checkMapPrice() > balance.getBalance()) {
+				System.out.println();
 				System.out.println("Not enough money in balance.");
 				run();
 			}
 			if(vendingMachineData.get(itemKeyChoice).getInventory() < 1) {
+				System.out.println();
 				System.out.println("Out of stock.");
 				run();
 			}
@@ -105,6 +119,10 @@ public class PurchaseMenu {
 				balance.updateBalanceAfterPurchase(vendingMachineData.get(itemKeyChoice).getPrice());
 				vendingMachineData.get(itemKeyChoice).setInventory();
 				
+				System.out.println();
+				System.out.println(vendingMachineData.get(itemKeyChoice).getProduct() + ", " + vendingMachineData.get(itemKeyChoice).getPrice() + ", " + balance.displayBalance() + ", " + vendingMachineData.get(itemKeyChoice).getItemMessage());
+				System.out.println();
+	
 				showMenu();
 				getInput();
 				useInput();
@@ -137,9 +155,7 @@ public class PurchaseMenu {
 			System.out.println();
 			System.out.println("Please enter a valid key: ");
 			System.out.println();
-			for (int i = 0; i < itemList.size(); i++) {
-				System.out.println(itemList.get(i));
-			}
+			run();
 			
 			theirInput = userInput.nextLine();
 		}

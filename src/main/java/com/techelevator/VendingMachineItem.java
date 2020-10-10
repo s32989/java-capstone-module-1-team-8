@@ -7,6 +7,7 @@ public class VendingMachineItem {
 	private double price;
 	private String productType;
 	private String itemKey;
+	private String itemMessage;
 	
 	
 	
@@ -15,7 +16,11 @@ public class VendingMachineItem {
 		this.product = productInfo[1];								///just using the format given in vendingmachine.csv to assign elements of string array to their appropriate instance variables
 		this.price = Double.parseDouble(productInfo[2]);
 		this.productType = productInfo[3];
+		this.itemMessage = productInfo[4];
+	}
 		
+	public String getItemMessage() {
+		return itemMessage;
 	}
 	
 	public String getItemKey() {
