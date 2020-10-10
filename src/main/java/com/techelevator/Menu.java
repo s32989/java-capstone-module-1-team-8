@@ -1,6 +1,5 @@
 package com.techelevator;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -8,11 +7,10 @@ public class Menu {
 	private String userChoice = "";
 	private Scanner userInput = new Scanner(System.in);
 	private Map<String, VendingMachineItem> vendingMachineData;
-	private List<String> itemList;
 	
-	public Menu(Map<String, VendingMachineItem> data, List<String> itemList) {
+	public Menu(Map<String, VendingMachineItem> data) {
 		
-		this.itemList = itemList;
+		
 		this.vendingMachineData = data;
 		
 	}
@@ -85,7 +83,7 @@ public class Menu {
 	
 	
 	public void goToPurchaseMenu() {
-		PurchaseMenu pM = new PurchaseMenu(vendingMachineData, itemList);
+		PurchaseMenu pM = new PurchaseMenu(vendingMachineData);
 		pM.run();
 	}
 	
