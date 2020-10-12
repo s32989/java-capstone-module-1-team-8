@@ -11,9 +11,9 @@ public class VendingMachineItem {
 	
 	
 	
-	public VendingMachineItem(String[] productInfo) {
+	public VendingMachineItem(String[] productInfo) {				//constructor for a vendingMachineItem object (uses the format of the input file)
 		this.itemKey = productInfo[0];
-		this.product = productInfo[1];								///just using the format given in vendingmachine.csv to assign elements of string array to their appropriate instance variables
+		this.product = productInfo[1];								
 		this.price = Double.parseDouble(productInfo[2]);
 		this.productType = productInfo[3];
 		this.itemMessage = productInfo[4];
@@ -43,14 +43,7 @@ public class VendingMachineItem {
 		return inventory;
 	}
 	
-	public void setInventory() {
+	public void setInventory() {													
 		this.inventory--;
 	}
-	/*@Override
-	public String toString() {
-		return this.itemKey + ": " + this.product + " " + this.price + " " + this.productType;
-	}*/
-	
-	
-
 }

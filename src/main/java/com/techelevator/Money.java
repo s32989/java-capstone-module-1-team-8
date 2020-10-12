@@ -1,5 +1,7 @@
 package com.techelevator;
 
+import java.text.NumberFormat;
+
 public class Money {
 	
 	private final int QUARTER = 25;
@@ -8,7 +10,7 @@ public class Money {
 	private int dollars;
 	private double change;
 	private double balance = 0.00;
-	private double fedMoney;
+	private double fedMoney;										//LOL
 	
 	Money(){
 		
@@ -21,8 +23,7 @@ public class Money {
 		change = (double) (balance - dollars);									
 	}
 	
-	public String makeChange() {									//***** will return output later as program develops
-		
+	public String makeChange() {									
 		
 		int quarterAmount = dollars * 4; 		
 		int dimeAmount = 0;
@@ -31,7 +32,6 @@ public class Money {
 		double centsAsDouble = change * 100.00;						//multiplying change value by 100
 		
 		int cents = (int) Math.round(centsAsDouble);				//rounding up from double format (i.e. 19.999999999 cents goes to 20 cents)				
-		
 		
 		
 		quarterAmount += cents / QUARTER;							//how many quarters?
@@ -44,7 +44,7 @@ public class Money {
 		
 		nickelAmount += nickelsRemaining / NICKEL;					//how many nickels? (there can only ever be one nickel)
 		
-		return cents + ") You receive " + quarterAmount + " quarter(s), " + dimeAmount + " dime(s), and " + nickelAmount + " nickels in change.";
+		return "You receive " + quarterAmount + " quarter(s), " + dimeAmount + " dime(s), and " + nickelAmount + " nickels in change.";
 	}
 	
 	
@@ -52,9 +52,8 @@ public class Money {
 		
 		balance += moneyFed;
 		
-		fedMoney = moneyFed;
+		fedMoney = moneyFed;												//lol... fedMoney is for keeping the log 
 		
-		//System.out.println(moneyFed + " "+ getBalance()); 		//the argument variable and the getBalance method will let us log how we want
 	}
 	
 	public double getBalance() {
@@ -66,19 +65,18 @@ public class Money {
 		this.balance = 0.00;
 	}
 	
-	public void updateBalanceAfterPurchase(double itemCost) {
+	public void updateBalanceAfterPurchase(double itemCost) {				//subtracts itemCost from balance 	
 		
 		balance -= itemCost;	
 	}
 	
 	public String displayBalance() {
-		return "Current Money Provided $ " + balance;
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();
+		
+		return "Current Money Provided: " + formatter.format(balance);
 	}
 	
 	public double fedMoney() {
 		return fedMoney;
 	}
-	
-	
-
 }

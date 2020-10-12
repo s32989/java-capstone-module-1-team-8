@@ -14,9 +14,9 @@ public class VendingMachine  {
 	
 	public static void main (String[] args) {
 		
-		initializeVendingMachineMap();
-		Menu main = new Menu(vendingMachineItems, log);
-		main.run();
+		initializeVendingMachineMap();																				//we run this method to populate our TreeMap with data from the text file
+		Menu main = new Menu(vendingMachineItems, log);																//we make a new Menu object, we pass in our TreeMap and our log file to be used in that code
+		main.run();																									//we call the run method(a derived method in the Menu class) that displays our menu)
 		
 	}
 	
@@ -24,19 +24,20 @@ public class VendingMachine  {
 		
 		String path = "vendingmachine.csv"; 					
 		
-		File vendingMachineItemInfo = new File(path);
+		File vendingMachineItemInfo = new File(path);																//create a file object that is at the path; 
 		
 		try {
-			Scanner fileScanner = new Scanner(vendingMachineItemInfo);
+			Scanner fileScanner = new Scanner(vendingMachineItemInfo);												//Open a scanner to take in the file
 			
-			while (fileScanner.hasNextLine()) {																		//for as long at there is another line in the input file
-				String splitMe = fileScanner.nextLine();
+			while (fileScanner.hasNextLine()) {																		//"for as long at there is another line in the input file"
 				
-				String[] info = splitMe.split("\\|");																//split input for each line delimited by |
+				String splitMe = fileScanner.nextLine();															//make a String that contains the line of text
 				
-				VendingMachineItem vItem = new VendingMachineItem(info);											//VendingMachineItem class passes a string array, (but never uses the first element :o)
+				String[] info = splitMe.split("\\|");																//split that String into a String array (split it at each "pipe": |)
 				
-				vendingMachineItems.put(info[0], vItem);															//first element is the vending machine code, list the items in hashMap by their code.
+				VendingMachineItem vItem = new VendingMachineItem(info);											//make a new VendingMachine item object (VendingMachineItems take a string array argument for their constructor)
+				
+				vendingMachineItems.put(info[0], vItem);															//knowing how the input file is formatted, we know that the first piece of information is the product key, we chose to use that as our key in our TreeMap. We store the rest of the data from the input file in a vendingMachineItem object (vItem). 
 				
 			}
 			
