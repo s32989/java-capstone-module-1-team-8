@@ -39,7 +39,7 @@ public class PurchaseMenu {
 //********* SHOWMENU AND ASSOCIATED METHODS **************
 	
 	
-	public void showMenu() {														//this method prints the menu to the console
+	private void showMenu() {														//this method prints the menu to the console
 		System.out.println();
 		System.out.println("***Purchase Menu***");
 		System.out.println();
@@ -51,7 +51,7 @@ public class PurchaseMenu {
         
 	}
 	
-	public void showBalance() {
+	private void showBalance() {
 		System.out.println(balance.displayBalance());
 		System.out.println();
 	}
@@ -60,7 +60,7 @@ public class PurchaseMenu {
 //********* GETINPUT AND ASSOCIATED METHODS ***********
 	
 	
-	public void getInput() {														//this method asks the user for input
+	private void getInput() {														//this method asks the user for input
 		
 		System.out.print("Please choose an option>>> ");
 		String rawInput = userInput.nextLine();
@@ -70,7 +70,7 @@ public class PurchaseMenu {
 		
 	}
 	
-	public String validateInput(String rawInput) {									//this method validates the user's input
+	private String validateInput(String rawInput) {									//this method validates the user's input
 		
 		String validateMe = rawInput.trim();
 		while (!validateMe.equals("1") && !validateMe.equals("2") && !validateMe.equals("3")) {
@@ -84,7 +84,7 @@ public class PurchaseMenu {
 //************ USEINPUT AND ASSOCIATED METHODS ***********
 	
 	
-	public void useInput() { 
+	private void useInput() { 
 		
 		if (userChoice.equals("1")) {
 		
@@ -120,7 +120,7 @@ public class PurchaseMenu {
 		
 	}
 	
-	public void getABill() {														//"take a bill" from the user
+	private void getABill() {														//"take a bill" from the user
 		
 		System.out.print("Please add a $1, $2, $5 or $10 bill>>> ");
 		
@@ -130,7 +130,7 @@ public class PurchaseMenu {
 		
 	}
 	
-	public void validateBillEntered() {												//ensures a valid bill denomination was entered and adds it the balance
+	private void validateBillEntered() {												//ensures a valid bill denomination was entered and adds it the balance
 		
 		while(!bill.equals("1") && !bill.equals("2") && !bill.equals("5") && !bill.equals("10")) {
 			System.out.println("Please add a $1, $2, $5 or $10 bill. Type exit to go back to the Purchase menu.");
@@ -149,7 +149,7 @@ public class PurchaseMenu {
 		
 	}
 	
-	public void logBillEntered() {													//records each time a bill is entered
+	private void logBillEntered() {													//records each time a bill is entered
 		
 		NumberFormat formatter = NumberFormat.getCurrencyInstance();
 		
@@ -174,7 +174,7 @@ public class PurchaseMenu {
 		
 	}
 	
-	public void showProductMenu(){													//this method shows a menu with information for each product
+	private void showProductMenu(){													//this method shows a menu with information for each product
 		
 		for (String key: vendingMachineItems.keySet()) {					
 			VendingMachineItem vMI = vendingMachineItems.get(key);
@@ -191,7 +191,7 @@ public class PurchaseMenu {
 		
 	}
 	
-	public void getItemKeyInput() {													//this method validates and stores the desired item key from the user
+	private void getItemKeyInput() {													//this method validates and stores the desired item key from the user
 		
 		String theirInput = userInput.nextLine().trim().toUpperCase();
 		
@@ -206,7 +206,7 @@ public class PurchaseMenu {
 		itemKeyChoice = theirInput;
 	}
 	
-	public void tryPurchase() {																							//*** attempts to allow user to purchase selected item
+	private void tryPurchase() {																							//*** attempts to allow user to purchase selected item
 		
 		if(checkMapPrice() > balance.getBalance()) {																	//if the price of the item is greater than the user's balance
 			System.out.println();
@@ -236,32 +236,32 @@ public class PurchaseMenu {
 		
 	}
 	
-	public double checkMapPrice() {																	//this method checks the price of the item in the TreeMap using the key the user provided		
+	private double checkMapPrice() {																	//this method checks the price of the item in the TreeMap using the key the user provided		
 		
 		return vendingMachineItems.get(itemKeyChoice).getPrice();
 		
 	}
 	
-	public void updateBalance() {																	//subtracts item cost from balance after purchase 
+	private void updateBalance() {																	//subtracts item cost from balance after purchase 
 		
 		balance.updateBalanceAfterPurchase(vendingMachineItems.get(itemKeyChoice).getPrice());
 		
 	}
 	
-	public void updateInventory() {																	//updates inventory data after a purchase
+	private void updateInventory() {																	//updates inventory data after a purchase
 		
 		vendingMachineItems.get(itemKeyChoice).setInventory();
 		
 	}
 	
-	public void displayPurchaseMessage() {												
+	private void displayPurchaseMessage() {												
 		
 		System.out.println();
 		System.out.println(vendingMachineItems.get(itemKeyChoice).getProduct() + ", $" + vendingMachineItems.get(itemKeyChoice).getPrice() + ", " + balance.displayBalance() + ", " + vendingMachineItems.get(itemKeyChoice).getItemMessage());
 		System.out.println();
 	}
 	
-	public void logPurchase(double beforeBalance) {													//records each time a successful purchase was made
+	private void logPurchase(double beforeBalance) {													//records each time a successful purchase was made
 		
 		VendingMachineItem vMI = vendingMachineItems.get(itemKeyChoice);
     	DateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa");
@@ -283,7 +283,7 @@ public class PurchaseMenu {
 		
 	}
 	
-	public void dispenseChange() {																	//formats and empties the balance, then "dispenses change" to user
+	private void dispenseChange() {																	//formats and empties the balance, then "dispenses change" to user
 		
 		balance.formatChange();
 		System.out.println(balance.makeChange());
@@ -291,7 +291,7 @@ public class PurchaseMenu {
 		
 	}
 	
-	public void logChangeGiven(double remainingBal) {												//records each time change is dispensed
+	private void logChangeGiven(double remainingBal) {												//records each time change is dispensed
 
     	DateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa");
     	String dateString2 = dateFormat2.format(new Date()).toString();

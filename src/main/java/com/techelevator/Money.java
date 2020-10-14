@@ -10,7 +10,7 @@ public class Money {
 	private int dollars;
 	private double change;
 	private double balance = 0.00;
-	private double fedMoney;										//LOL
+	private double fedMoney;										// <-LOL
 	
 	Money(){
 		
@@ -52,7 +52,7 @@ public class Money {
 		
 		balance += moneyFed;
 		
-		fedMoney = moneyFed;												//lol... fedMoney is for keeping the log 
+		fedMoney = moneyFed;												//LOL... fedMoney is for keeping the log
 		
 	}
 	

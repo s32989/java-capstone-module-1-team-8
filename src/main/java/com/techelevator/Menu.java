@@ -25,7 +25,7 @@ public class Menu {
 		useInput();
 	}
 	
-	public void showHeader() {													//this method prints the menu head to the console.
+	private void showHeader() {													//this method prints the menu head to the console.
 		System.out.println();
 		System.out.println("*********************");
 		System.out.println("** Vendo-Matic 800 **");
@@ -36,7 +36,7 @@ public class Menu {
 		
 	}
 	
-	public void showMenu() {													//this method prints the menu to the console.
+	private void showMenu() {													//this method prints the menu to the console.
 		System.out.println();
 		System.out.println("***Main Menu***");
 		System.out.println();
@@ -49,7 +49,7 @@ public class Menu {
 
 //********* GETINPUT AND ASSOCIATED METHODS **********
 	
-	public void getInput() {													//this method asks the user for input
+	private void getInput() {													//this method asks the user for input
 		
 		System.out.print("Please choose an option>>> ");
 		String rawInput = userInput.nextLine();
@@ -59,7 +59,7 @@ public class Menu {
 		
 	}
 	
-	public String validateInput(String rawInput) {								//this method validates the user's input
+	private String validateInput(String rawInput) {								//this method validates the user's input
 		
 		String validateMe = rawInput.trim();
 		while (!validateMe.equals("1") && !validateMe.equals("2") && !validateMe.equals("3")) {
@@ -71,7 +71,7 @@ public class Menu {
 	
 //************* USEINPUT AND ASSOCIATED METHODS ************
 	
-	public void useInput() {													//this method handles the user's input
+	private void useInput() {													//this method handles the user's input
 		if (userChoice.equals("1")) {
 			
 			displayItemMenu();
@@ -88,7 +88,7 @@ public class Menu {
 		}
 	}
 	
-	public void displayItemMenu() {												//this method displays the list of items with their information (key/product/price/product type/inventory)
+	private void displayItemMenu() {												//this method displays the list of items with their information (key/product/price/product type/inventory)
 		
 		NumberFormat formatter = NumberFormat.getCurrencyInstance();
 		
@@ -102,7 +102,7 @@ public class Menu {
 		}
 	}
 	
-	public void goToPurchaseMenu() {										//this method allows takes the user to the purchase menu						
+	private void goToPurchaseMenu() {										//this method allows takes the user to the purchase menu						
 		PurchaseMenu pM = new PurchaseMenu(vendingMachineItems, log);		//"create a new purchase menu object (this object uses data from the TreeMap vendingMachineData and also can write to our log file)	
 		pM.run();															//***** NOTE: it has a run method that operates much like the run method in this class			
 	}

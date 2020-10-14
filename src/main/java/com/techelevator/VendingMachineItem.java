@@ -10,7 +10,6 @@ public class VendingMachineItem {
 	private String itemMessage;
 	
 	
-	
 	public VendingMachineItem(String[] productInfo) {				//constructor for a vendingMachineItem object (uses the format of the input file)
 		this.itemKey = productInfo[0];
 		this.product = productInfo[1];								
